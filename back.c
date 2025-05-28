@@ -92,41 +92,86 @@ void realizarLogin() {
 // ==== CONSULTA DE PRODUTOS ====
 
 void consultarProdutos() {
-    int idPedido[] = {1, 2, 3, 5, 7};
-    bool laudo[] = {1, 0, 0, 1, 1};
-    int quantidadeProdutos = 5;
-    int tipoPesquisa, idFiltrado;
-
-    printf("Pelo que deseja filtrar?\n1- Todos os produtos\n2- Produtos pelo id\n3- Produtos que precisam de laudo\n4- Produtos que não precisam de laudo\n   Escreva: ");
+    int quantidadeProdutos, cont, idFiltrado;
+    int tipoPesquisa;
+    char sugerir;
+    int idPedido[] = {1,2,3,5,7};
+    bool laudo[]={1,0,0,1,1};
+    quantidadeProdutos=5;
+    cont=0;
+    
+    printf("Pelo que deseja filtrar? \n1- Todos os produtos\n2- Produtos pelo id\n3- Produtos que precisam de laudo\n4- Produtos que não precisam de laudo\n   Escreva: ");
     scanf("%d", &tipoPesquisa);
     printf("-------------------------------------------------------------\n");
-
-    for (int cont = 0; cont < quantidadeProdutos; cont++) {
-        switch (tipoPesquisa) {
-            case 1:
-                printf(" -O produto do id: %d, %s de prescrição para ser comprado\n",
-                       idPedido[cont], laudo[cont] ? "PRECISA" : "NÃO precisa");
-                break;
-            case 2:
-                printf("Id que deseja filtrar: ");
-                scanf("%d", &idFiltrado);
-                if (idPedido[cont] == idFiltrado)
-                    printf(" -O produto do id: %d, %s de prescrição para ser comprado\n",
-                           idPedido[cont], laudo[cont] ? "PRECISA" : "NÃO precisa");
-                return;
-            case 3:
-                if (laudo[cont])
-                    printf(" -O produto do id: %d, PRECISA de prescrição para ser comprado\n", idPedido[cont]);
-                break;
-            case 4:
-                if (!laudo[cont])
-                    printf(" -O produto do id: %d, NÃO precisa de prescrição para ser comprado\n", idPedido[cont]);
-                break;
-            default:
-                printf("Desculpa, a aplicação não atende a essa função.\n");
-                return;
+    if(tipoPesquisa==1){
+        //pesquisa por todos os produtos
+        while(cont<quantidadeProdutos){
+            if(laudo[cont]==0){
+                printf(" -O produto do id: %d, NÃO precisa de prescricao para ser comprado \n", idPedido[cont]);
+            }
+            else if(laudo[cont]==1){
+                printf(" -O produto do id: %d, PRECISA de prescricao para ser comprado \n", idPedido[cont]);
+            }
+            else{
+                printf("\033[1;31m -Ocorreu um erro com o produto %d, contate o adm da aplicação\033[0m\n", idPedido[cont]);
+            }
+            cont++;
         }
     }
+    else if(tipoPesquisa==2){
+        //pesquisa pelo id do produto
+        printf("Id que deseja filtrar: \n");
+        scanf("%d", &idFiltrado);
+        while(cont<quantidadeProdutos){
+            if(idPedido[cont]==idFiltrado){
+                if(laudo[cont]==0){
+                    printf(" -O produto do id: %d, NÃO precisa de prescricao para ser comprado\n", idPedido[cont]);
+                }
+                else if(laudo[cont]==1){
+                    printf(" -O produto do id: %d, PRECISA de prescricao para ser comprado \n", idPedido[cont]);
+                }
+                else{
+                    printf("\033[1;31m -Ocorreu um erro com o produto %d, contate o adm da aplicação\033[0m\n", idPedido[cont]);
+                }
+            }
+            cont++;
+        }
+    }
+    else if(tipoPesquisa==3){
+        //pesquisa por produtos que precisam de laudo
+        while(cont<quantidadeProdutos){
+            if(laudo[cont]==1){
+                printf(" -O produto do id: %d, PRECISA de prescricao para ser comprado\n", idPedido[cont]);
+            }
+            else if(laudo[cont]==0){
+                
+            }
+            else{
+                printf("\033[1;31m -Ocorreu um erro, contate o adm da aplicação\033[0m\n");
+            }    
+            cont++;
+        }
+    }
+    else if(tipoPesquisa==4){
+        //pesquisa por produtos que nao precisam de laudo
+        while(cont<quantidadeProdutos){
+            if(laudo[cont]==0){
+                printf(" -O produto do id: %d, NÃO precisa de prescricao para ser comprado\n", idPedido[cont]);
+            }
+            else if(laudo[cont]==1){
+                
+            }
+            else{
+                printf("\033[1;31m -Ocorreu um erro, contate o adm da aplicação\033[0m\n");
+            }
+            cont++;
+        }
+    }
+    else{
+        printf("Desculpa, a aplicação não atende a essa funcão.\n");
+    }
+
+
 }
 
 // ==== RASTREAMENTO ====
